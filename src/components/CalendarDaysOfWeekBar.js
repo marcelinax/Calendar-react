@@ -5,7 +5,7 @@ export const CalendarDaysOfWeekBar = () => {
 
   const renderDaysOfWeek = () => {
     return daysOfWeek.map((dayOfWeek) => (
-      <div className="day-of-week">
+      <div className="day-of-week" key={dayOfWeek}>
         <p>{dayOfWeek}</p>
       </div>
     ));

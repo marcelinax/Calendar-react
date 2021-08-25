@@ -1,38 +1,34 @@
 import React, { useEffect, useState } from "react";
 
+import { CalendarCardChangeButtons } from "./CalendarCardChangeButtons";
 import { CalendarDaysOfWeekBar } from "./CalendarDaysOfWeekBar";
 import { CalendarRow } from "./CalendarRow";
 import { CurrentCalendarCardDate } from "./CurrentCalendarCardDate";
 
 export const Calendar = () => {
-  const [currentMonth, setCurrentMonth] = useState("");
+  const moment = require("moment");
+
+  const [currentMonth, setCurrentMonth] = useState(moment());
 
   // const changeCurrentMonth = () => {
   //   setCurrentMonth()
   // }
 
   const holidays = [
-    { id: 1, name: "Dzień Cyśi", date: "15.08.2021" },
-    { id: 2, name: "Dzień Mata", date: "12.08.2021" },
+    { id: 1, name: "Dzień Cyśi", date: "15-08-2021" },
+    { id: 2, name: "Dzień Mata", date: "12-08-2021" },
   ];
 
-  const moment = require("moment");
-
   const getDaysInMonth = () => {
-    return moment().daysInMonth();
+    // return moment().daysInMonth();
+    console.log(moment(currentMonth).daysInMonth());
+    return moment(currentMonth).daysInMonth();
   };
 
   const getFirstWeekDayOfMonth = () => {
-    return moment().startOf("month").isoWeekday();
+    // return moment().startOf("month").isoWeekday();
+    return moment(currentMonth).startOf("month").isoWeekday();
   };
-
-  const a = () => {
-    holidays.map((holiday) => console.log(holiday));
-    holidays.map((holiday) => console.log(moment(holiday.date).date()));
-  };
-  useEffect(() => {
-    a();
-  });
 
   const renderCalendarRows = () => {
     const calendarRows = [];
@@ -43,10 +39,23 @@ export const Calendar = () => {
           weekOffSet={i}
           daysInMonth={getDaysInMonth()}
           key={i}
+          // holidayDate={}
         />
       );
     }
     return calendarRows;
+  };
+
+  const goNextMonth = () => {
+    const nextMonth = moment(currentMonth).add(1, "month");
+    setCurrentMonth(nextMonth);
+    console.log(nextMonth);
+  };
+
+  const goPreviousMonth = () => {
+    const previousMonth = moment(currentMonth).subtract(1, "month");
+    setCurrentMonth(previousMonth);
+    console.log(previousMonth);
   };
 
   const getMonth = (month) => {
@@ -80,11 +89,23 @@ export const Calendar = () => {
     }
   };
 
+  const getCurrentDate = () => {
+    return `${getMonth(moment(currentMonth).month())} ${moment(
+      currentMonth
+    ).year()}`;
+  };
+
   return (
     <div className="calendar">
-      <CurrentCalendarCardDate
-        currentDate={`${getMonth(moment().month())} ${moment().year()}`}
+      <CalendarCardChangeButtons
+        nextMonth={() => {
+          goNextMonth();
+        }}
+        previousMonth={() => {
+          goPreviousMonth();
+        }}
       />
+      <CurrentCalendarCardDate currentDate={getCurrentDate()} />
       <CalendarDaysOfWeekBar />
       <div className="calendar-card">{renderCalendarRows()}</div>
     </div>
