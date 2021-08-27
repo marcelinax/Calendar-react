@@ -9,24 +9,34 @@ export const Calendar = () => {
   const moment = require("moment");
 
   const [currentMonth, setCurrentMonth] = useState(moment());
-
-  // const changeCurrentMonth = () => {
-  //   setCurrentMonth()
-  // }
+  const [previousMonth, setPreviousMonth] = useState(
+    moment(currentMonth).subtract(1, "month")
+  );
+  const [nextMonth, setNextMonth] = useState(
+    moment(currentMonth).add(1, "month")
+  );
 
   const holidays = [
-    { id: 1, name: "Dzień Cyśi", date: "15-08-2021" },
-    { id: 2, name: "Dzień Mata", date: "12-08-2021" },
+    { id: 1, name: "Dzień Cyśi", date: "15-08" },
+    { id: 2, name: "Dzień Mata", date: "12-08" },
+    { id: 3, name: "Dzień Dupy", date: "02-08" },
+    { id: 4, name: "Dzień Chuchu", date: "01-09" },
   ];
 
+  const getHolidaysForCurrentMonth = () => {
+    const holidaysForCurrentMonth = holidays.filter(
+      (holiday) => +holiday.date.split("-")[1] === currentMonth.month() + 1
+    );
+
+    return holidaysForCurrentMonth;
+  };
+
   const getDaysInMonth = () => {
-    // return moment().daysInMonth();
     console.log(moment(currentMonth).daysInMonth());
     return moment(currentMonth).daysInMonth();
   };
 
   const getFirstWeekDayOfMonth = () => {
-    // return moment().startOf("month").isoWeekday();
     return moment(currentMonth).startOf("month").isoWeekday();
   };
 
@@ -36,10 +46,15 @@ export const Calendar = () => {
       calendarRows.push(
         <CalendarRow
           startingIndex={getFirstWeekDayOfMonth()}
+          isSelelectedMonthWithToday={
+            currentMonth.month() == moment().month() &&
+            currentMonth.year() == moment().year()
+          }
           weekOffSet={i}
           daysInMonth={getDaysInMonth()}
           key={i}
-          // holidayDate={}
+          daysInPreviousMonth={moment(previousMonth).daysInMonth()}
+          holidaysForCurrentMonth={getHolidaysForCurrentMonth()}
         />
       );
     }

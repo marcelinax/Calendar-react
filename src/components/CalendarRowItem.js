@@ -1,10 +1,21 @@
 import React from "react";
 
-export const CalendarRowItem = ({ dayOfMonth, holidayName }) => {
+export const CalendarRowItem = ({
+  dayOfMonth,
+  holidays,
+  isInCurrentMonth,
+  isToday,
+}) => {
   return (
-    <div className="calendar-row-item">
-      <p className="day-of-month">{dayOfMonth}</p>
-      <p>{holidayName}</p>
+    <div className={isToday ? "calendar-row-item--today" : "calendar-row-item"}>
+      <p
+        className={
+          isInCurrentMonth ? "day-of-current-month" : "day-of-other-months"
+        }
+      >
+        {dayOfMonth}
+      </p>
+      <p>{holidays.map((holiday) => holiday.name)}</p>
     </div>
   );
 };
