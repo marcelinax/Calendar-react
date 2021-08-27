@@ -112,15 +112,18 @@ export const Calendar = () => {
 
   return (
     <div className="calendar">
-      <CalendarCardChangeButtons
-        nextMonth={() => {
-          goNextMonth();
-        }}
-        previousMonth={() => {
-          goPreviousMonth();
-        }}
-      />
-      <CurrentCalendarCardDate currentDate={getCurrentDate()} />
+      <div className="calendar-top">
+        <CurrentCalendarCardDate currentDate={getCurrentDate()} />
+        <CalendarCardChangeButtons
+          nextMonth={() => {
+            goNextMonth();
+          }}
+          previousMonth={() => {
+            goPreviousMonth();
+          }}
+        />
+      </div>
+
       <CalendarDaysOfWeekBar />
       <div className="calendar-card">{renderCalendarRows()}</div>
     </div>

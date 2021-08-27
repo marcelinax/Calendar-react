@@ -15,7 +15,7 @@ export const CalendarRowItem = ({
       >
         {dayOfMonth}
       </p>
-      <p>{holidays.map((holiday) => holiday.name)}</p>
+      <p className="holidays">{holidays.map((holiday) => holiday.name)}</p>
     </div>
   );
 };
