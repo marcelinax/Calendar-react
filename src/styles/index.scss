@@ -7,15 +7,17 @@
 }
 
 .App {
-  width: calc(100vh - 4rem);
+  width: calc(100vw - 6rem);
   display: flex;
-  height: calc(100vh - 4rem);
+  height: 100vh;
   padding: 2rem;
   background-color: #f9f9f9;
+
   .calendar {
     display: flex;
     height: max-content;
     flex-direction: column;
+
     padding: 20px;
     background-color: white;
     box-shadow: 0 0 15px rgba(#000, 0.2);
@@ -108,6 +110,84 @@
         .day-of-current-month {
           color: #aca0f6;
         }
+      }
+    }
+  }
+  .calendar-events-form {
+    display: flex;
+    box-shadow: 0 0 15px rgba(#000, 0.2);
+    background-color: white;
+    flex-direction: column;
+    margin: auto;
+    padding: 1rem;
+    align-items: center;
+    width: 500px;
+    height: 700px;
+    justify-content: space-around;
+    border-radius: 20px;
+
+    h5 {
+      font-size: 1.5rem;
+    }
+    &-inputs {
+      display: flex;
+      flex-direction: column;
+      width: calc(100% - 2rem);
+      .calendar-events-form-input {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+        label {
+          margin-bottom: 0.5rem;
+          font-size: 14px;
+          color: #aca0f6;
+        }
+        &:first-of-type {
+          margin-bottom: 2.5rem;
+        }
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+        input {
+          outline: none;
+          padding: 10px 20px;
+          border: 1px solid #aca0f6;
+          height: 30px;
+          border-radius: 10px;
+          color: #aca0f6;
+          background-color: #f1f1fe;
+
+          &::placeholder {
+            color: #aca0f6;
+          }
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          filter: invert(81%) sepia(19%) saturate(7391%) hue-rotate(200deg)
+            brightness(99%) contrast(95%);
+        }
+        input[type="time"]::-webkit-calendar-picker-indicator {
+          filter: invert(81%) sepia(19%) saturate(7391%) hue-rotate(200deg)
+            brightness(99%) contrast(95%);
+        }
+      }
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% - 2rem);
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background-color: #aca0f6;
+      color: white;
+      padding: 15px 10px;
+      transition: 0.3s all;
+      cursor: pointer;
+      font-size: 1rem;
+      &:hover {
+        transform: scale(0.9);
       }
     }
   }
