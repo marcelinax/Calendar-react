@@ -1,5 +1,6 @@
 import { CalendarRowItem } from "./CalendarRowItem";
 import React from "react";
+import getMonth from "../utils/getMonth";
 import moment from "moment";
 
 export const CalendarRow = ({
@@ -29,15 +30,18 @@ export const CalendarRow = ({
           }
           isInCurrentMonth={day >= 1 && day <= daysInMonth}
           holidays={holidaysForCurrentMonth.filter(
-            (holiday) => +holiday.date.split(".")[0] === day
+            (holiday) => +holiday.date.iso.split("-")[2] === day
           )}
           isToday={moment().date() === day && isSelelectedMonthWithToday}
           events={events.filter(
             (event) =>
-              +event.date.split("-")[2] === day &&
-              +event.date.split("-")[1] === currentMonthAndYear[0] + 1 &&
-              +event.date.split("-")[0] === currentMonthAndYear[1]
+              +event.date.iso.split("-")[2] === day &&
+              +event.date.iso.split("-")[1] === currentMonthAndYear[0] + 1 &&
+              +event.date.iso.split("-")[0] === currentMonthAndYear[1]
           )}
+          date={`${getMonth(currentMonthAndYear[0])} ${day}, ${
+            currentMonthAndYear[1]
+          }`}
         />
       );
     }

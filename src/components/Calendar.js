@@ -4,13 +4,15 @@ import { CalendarCardChangeButtons } from "./CalendarCardChangeButtons";
 import { CalendarDaysOfWeekBar } from "./CalendarDaysOfWeekBar";
 import { CalendarRow } from "./CalendarRow";
 import { CurrentCalendarCardDate } from "./CurrentCalendarCardDate";
-import { eventSlice } from "./../state/eventSlice";
+import axios from "axios";
+import getMonth from "./../utils/getMonth";
 import { useSelector } from "react-redux";
 
 export const Calendar = () => {
   const moment = require("moment");
 
   const [currentMonth, setCurrentMonth] = useState(moment());
+  const [holidays, setHolidays] = useState([]);
   const [previousMonth, setPreviousMonth] = useState(
     moment(currentMonth).subtract(1, "month")
   );
@@ -18,18 +20,22 @@ export const Calendar = () => {
     moment(currentMonth).add(1, "month")
   );
 
-  const events = useSelector((state) => state.eventSlice);
+  const events = useSelector((state) => state.eventSlice.events);
 
-  const holidays = [
-    { id: 1, name: "Dzień Cyśi", date: "15.08" },
-    { id: 2, name: "Dzień Mata", date: "12.08" },
-    { id: 3, name: "Dzień Dupy", date: "02.08" },
-    { id: 4, name: "Dzień Chuchu", date: "01.09" },
-  ];
+  const getHolidays = () => {
+    axios
+      .get(
+        `https://calendarific.com/api/v2/holidays?&api_key=5d4abf79e618196879802b5dc7507b240c8ebd4f&country=PL&year=${currentMonth.year()}`
+      )
+      .then((res) => setHolidays(res.data.response.holidays));
+  };
 
+  useEffect(() => {
+    getHolidays();
+  }, []);
   const getHolidaysForCurrentMonth = () => {
     const holidaysForCurrentMonth = holidays.filter(
-      (holiday) => +holiday.date.split(".")[1] === currentMonth.month() + 1
+      (holiday) => +holiday.date.iso.split("-")[1] === currentMonth.month() + 1
     );
 
     return holidaysForCurrentMonth;
@@ -75,37 +81,6 @@ export const Calendar = () => {
   const goPreviousMonth = () => {
     const previousMonth = moment(currentMonth).subtract(1, "month");
     setCurrentMonth(previousMonth);
-  };
-
-  const getMonth = (month) => {
-    switch (month) {
-      case 0:
-        return "January";
-      case 1:
-        return "February";
-      case 2:
-        return "March";
-      case 3:
-        return "April";
-      case 4:
-        return "May";
-      case 5:
-        return "June";
-      case 6:
-        return "July";
-      case 7:
-        return "August";
-      case 8:
-        return "September";
-      case 9:
-        return "October";
-      case 10:
-        return "November";
-      case 11:
-        return "December";
-      default:
-        return "";
-    }
   };
 
   const getCurrentDate = () => {

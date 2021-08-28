@@ -93,6 +93,7 @@
         height: 110px;
         padding: 20px;
         align-items: flex-end;
+        position: relative;
 
         .day-of-current-month {
           color: #a3a2b9;
@@ -122,7 +123,7 @@
           .event {
             display: flex;
             align-items: center;
-
+            position: relative;
             &-time {
               font-size: 12px;
               margin-right: 0.5rem;
@@ -130,6 +131,12 @@
             &-title {
               font-weight: 500;
               font-size: 13px;
+            }
+            i {
+              position: absolute;
+              top: 0;
+              right: 0;
+              cursor: pointer;
             }
           }
         }
@@ -142,6 +149,65 @@
         .events {
           background-color: #aca0f6;
           color: #f1f1fe;
+        }
+      }
+    }
+    .calendar-row-item-events {
+      display: none;
+    }
+  }
+  .calendar-row-item-events--active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    width: 250px;
+    min-height: 130px;
+    box-shadow: 0 0 15px rgba(#000, 0.2);
+    z-index: 2;
+    .calendar-row-item-events-info {
+      width: calc(100% - 20px);
+      background-color: #f1f1fe;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 10px;
+      align-items: center;
+      .date {
+        color: #aca0f6;
+        font-size: 15px;
+      }
+      i {
+        color: #aca0f6;
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+    }
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      .event {
+        display: flex;
+        align-items: center;
+        position: relative;
+        &-time {
+          font-size: 11px;
+          margin-right: 0.5rem;
+          color: #aca0f6;
+        }
+        &-title {
+          color: #aca0f6;
+          font-size: 13px;
+          font-weight: 500;
+        }
+        i {
+          position: absolute;
+          top: 0;
+          right: 0;
+          cursor: pointer;
+          color: #aca0f6;
         }
       }
     }

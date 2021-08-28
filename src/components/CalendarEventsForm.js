@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { addNewEvent, eventSlice } from "./../state/eventSlice";
-import { useDispatch, useSelector } from "react-redux";
 
+import { addNewEvent } from "./../state/eventSlice";
 import moment from "moment";
+import { useDispatch } from "react-redux";
 
 export const CalendarEventsForm = () => {
   const dispatch = useDispatch();

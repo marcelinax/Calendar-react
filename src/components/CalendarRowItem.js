@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CalendarRowItemEvent } from "./CalendarRowItemEvent";
+import CalendarRowItemEvents from "./CalendarRowItemEvents";
+import { removeEvent } from "../state/eventSlice";
+import { useDispatch } from "react-redux";
 
 export const CalendarRowItem = ({
   dayOfMonth,
@@ -8,9 +11,19 @@ export const CalendarRowItem = ({
   isInCurrentMonth,
   isToday,
   events,
+  date,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const showAllEventsForChosenDay = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const deleteEvent = (id) => {
+    dispatch(removeEvent({ id }));
+  };
+
   const renderEvents = () => {
-    console.log(events);
     if (events.length > 0) {
       let e = [];
 
@@ -19,12 +32,21 @@ export const CalendarRowItem = ({
           <CalendarRowItemEvent
             eventTime={events[0].time}
             eventTitle={events[0].title}
+            deleteEvent={() => {
+              deleteEvent(events[0].id);
+            }}
           />,
           <CalendarRowItemEvent
             eventTime={events[1].time}
             eventTitle={events[1].title}
+            deleteEvent={() => {
+              deleteEvent(events[1].id);
+            }}
           />,
-          <p className="see-more-events">{`see ${events.length - 2} more`}</p>,
+          <p
+            onClick={showAllEventsForChosenDay}
+            className="see-more-events"
+          >{`see ${events.length - 2} more`}</p>,
         ];
         return e;
       } else
@@ -33,9 +55,16 @@ export const CalendarRowItem = ({
             eventTime={event.time}
             eventTitle={event.title}
             key={index}
+            deleteEvent={() => {
+              deleteEvent(event.id);
+            }}
           />
         ));
     } else return null;
+  };
+
+  const closeEventsList = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -51,6 +80,12 @@ export const CalendarRowItem = ({
       {events.length > 0 ? (
         <div className="events">{renderEvents()}</div>
       ) : null}
+      <CalendarRowItemEvents
+        date={date}
+        events={events}
+        isOpen={isOpen}
+        closeEventsList={() => closeEventsList()}
+      />
     </div>
   );
 };
