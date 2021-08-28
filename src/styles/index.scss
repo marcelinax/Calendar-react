@@ -7,9 +7,9 @@
 }
 
 .App {
-  width: calc(100vw - 6rem);
+  width: calc(100vw - 5.1rem);
   display: flex;
-  height: 100vh;
+
   padding: 2rem;
   background-color: #f9f9f9;
 
@@ -104,11 +104,44 @@
           font-size: 12px;
           color: #aca0f6;
         }
+        .events {
+          display: flex;
+          flex-direction: column;
+          max-height: 60px;
+          width: 112%;
+          margin: auto;
+          border-radius: 10px;
+          background-color: #f1f1fe;
+          color: #aca0f6;
+          padding: 10px;
+          .see-more-events {
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+          }
+          .event {
+            display: flex;
+            align-items: center;
+
+            &-time {
+              font-size: 12px;
+              margin-right: 0.5rem;
+            }
+            &-title {
+              font-weight: 500;
+              font-size: 13px;
+            }
+          }
+        }
       }
       &-item--today {
         background-color: #f1f1fe;
         .day-of-current-month {
           color: #aca0f6;
+        }
+        .events {
+          background-color: #aca0f6;
+          color: #f1f1fe;
         }
       }
     }
